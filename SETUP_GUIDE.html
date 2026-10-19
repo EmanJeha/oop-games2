@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Setup Guide · OOP Games 2</title>
+<style>
+  :root { --ink: #1D2340; --soft: #5C6489; --sky: #EEF5FF; --line: #DCE4F7; --purple: #8F4DFF; --pink: #FF4F8B; --teal: #14C3A2; --blue: #3A86FF; --orange: #FF9F1C; }
+  body { margin: 0; background: var(--sky); color: var(--ink); font: 17px/1.6 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding-inline: 18px; padding-block: 32px 60px; }
+  h1 { font-size: 38px; line-height: 1.1; margin: 0 0 6px; }
+  h2 { font-size: 24px; margin: 0 0 10px; display: flex; gap: 12px; align-items: center; }
+  h2 b { width: 40px; height: 40px; border-radius: 12px; color: #fff; display: grid; place-items: center; font-size: 20px; flex: none; }
+  section { background: #fff; border-radius: 20px; padding: 22px 24px; margin-top: 18px; box-shadow: 0 5px 0 var(--line); }
+  section:nth-of-type(1) h2 b { background: var(--pink); } section:nth-of-type(2) h2 b { background: var(--orange); } section:nth-of-type(3) h2 b { background: var(--teal); } section:nth-of-type(4) h2 b { background: var(--blue); } section:nth-of-type(5) h2 b { background: var(--purple); }
+  ol, ul { margin: 0; padding-left: 22px; } li { margin: 6px 0; }
+  code { font-family: Consolas, 'Courier New', monospace; background: var(--sky); padding: 1px 6px; border-radius: 6px; font-size: .92em; word-break: break-all; }
+  pre { background: #1D2340; color: #fff; border-radius: 14px; padding: 14px 16px; overflow-x: auto; font: 15px/1.5 Consolas, 'Courier New', monospace; }
+  .note { background: #FFF6D9; border-radius: 14px; padding: 12px 14px; margin-top: 12px; font-size: 15.5px; }
+  .lede { color: var(--soft); margin: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 15.5px; } td { padding: 8px; border-top: 1px solid var(--line); vertical-align: top; } td:first-child { font-weight: 700; white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+  <h1>OOP Games 2 · Methods (Grade 10): setup guide</h1>
+  <p class="lede">You already set up Firebase for the insertion sort games, so <b>skip steps 1 and 2</b>: config.js already has your Firebase settings. These games (Session 2: methods, slides 21–41) keep their own scores, so they never mix with your Session 1 OOP games or the sorting games.</p>
+
+  <section>
+    <h2><b>1</b>Create the free database (Firebase)</h2>
+    <ol>
+      <li>Go to <code>console.firebase.google.com</code> and sign in with a Google account.</li>
+      <li>Click <b>Create a project</b>. Name it, for example, <code>insertion-games</code>. Turn <b>Google Analytics off</b>, then create the project.</li>
+      <li>In the left menu open <b>Build → Realtime Database</b> and click <b>Create Database</b>. Pick a location (Belgium, <code>europe-west1</code>, is closest to Saudi Arabia). Choose <b>Start in test mode</b> and click <b>Enable</b>.</li>
+      <li>Open the <b>Rules</b> tab, delete what is there, paste the rules below, and click <b>Publish</b>.</li>
+    </ol>
+<pre>{
+  "rules": {
+    "sessions": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}</pre>
+    <p class="note">Test mode stops working after 30 days. These rules keep it working. The games only store pair names, scores and exit-ticket answers, so use first names only.</p>
+  </section>
+
+  <section>
+    <h2><b>2</b>Copy your settings into config.js</h2>
+    <ol>
+      <li>In Firebase click the <b>gear icon → Project settings</b>. Scroll to <b>Your apps</b> and click the web icon <code>&lt;/&gt;</code>.</li>
+      <li>Give it any nickname (for example <code>games</code>) and click <b>Register app</b>. You don't need Firebase Hosting.</li>
+      <li>Firebase shows a block called <code>firebaseConfig</code>. Open <code>config.js</code> from this folder in Notepad and replace each <code>PASTE…</code> value with the matching value. Keep the quotes.</li>
+      <li>Check <code>databaseURL</code>. It must match the address shown at the top of the <b>Realtime Database</b> page (it ends in <code>firebaseio.com</code> or <code>firebasedatabase.app</code>). If Firebase didn't include it, copy it from there.</li>
+    </ol>
+    <p class="note">The <code>apiKey</code> in a Firebase web app is meant to be public, so it is fine to put it on GitHub.</p>
+  </section>
+
+  <section>
+    <h2><b>3</b>Put the games on GitHub Pages</h2>
+    <p class="note" style="margin:0 0 10px">If you name the repository something other than <code>oop-games2</code>, change the <code>SITE_URL</code> line at the bottom of config.js to match.</p>
+    <ol>
+      <li>On <code>github.com</code> click <b>New repository</b>. Name it <code>oop-games2</code>, set it to <b>Public</b>, and create it.</li>
+      <li>Click <b>uploading an existing file</b>. Drag in <b>all the files from this folder</b> (not the folder itself), including your edited <code>config.js</code>. Click <b>Commit changes</b>.</li>
+      <li>Open <b>Settings → Pages</b>. Under <b>Build and deployment</b> choose <b>Deploy from a branch</b>, branch <b>main</b>, folder <b>/ (root)</b>, and click <b>Save</b>.</li>
+      <li>Wait 1–2 minutes and refresh. GitHub shows your site address, like <code>https://emanjeha.github.io/oop-games2/</code></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2><b>4</b>Run it in class</h2>
+    <table>
+      <tr><td>Smart board</td><td>Open <code>https://emanjeha.github.io/oop-games2/board.html?game=warmup</code> and press <b>Full screen</b>. The QR code and join link appear on the left.</td></tr>
+      <tr><td>Students</td><td>One device per pair. They scan the QR code, type both names (for example <i>Sara &amp; Noura</i>) and press <b>Join</b>. Each pair appears on the board straight away.</td></tr>
+      <tr><td>Start</td><td>Press <b>Start game</b>. Every pair gets the questions on their own device. The board shows each pair's score, progress and which question they're on, and re-ranks live.</td></tr>
+      <tr><td>End</td><td>Press <b>End game</b> (or wait until everyone finishes and press <b>Show results</b>). You get the podium and a chart of which questions the class found hardest.</td></tr>
+      <tr><td>Wrap-up</td><td>At the end of the lesson press <b>Switch to Method Masters</b>. The QR changes to the wrap-up game. After it ends, press <b>Show answers</b> to read every pair's exit ticket.</td></tr>
+      <tr><td>Next class</td><td>Press <b>New round</b> (click twice). This clears the board for a fresh group.</td></tr>
+    </table>
+    <p class="note">Students can bookmark <code>https://emanjeha.github.io/oop-games2/</code> and choose a game there, but the QR code from the board is quickest.</p>
+  </section>
+
+  <section>
+    <h2><b>5</b>Good to know</h2>
+    <ul>
+      <li><b>Practice mode:</b> until <code>config.js</code> is filled in, students can still play, but nothing appears on the board.</li>
+      <li><b>Refreshing is safe:</b> if a pair's page reloads, they continue from where they were.</li>
+      <li><b>Late pairs</b> can join at any time while the game is live.</li>
+      <li><b>Scoring:</b> 100 points per correct answer, plus up to 50 for speed. In the warm-up, cracking the mystery topic is worth +200.</li>
+      <li><b>Changing questions:</b> edit <code>questions.js</code> in GitHub (pencil icon) and commit. Keep the same structure.</li>
+      <li><b>Who can control the board:</b> anyone who opens <code>board.html</code> can press Start or End, so don't share that link with students.</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>
